@@ -1,4 +1,3 @@
-// MovieDetail.tsx
 import React from "react";
 
 interface MovieDetailProps {
@@ -9,7 +8,7 @@ interface MovieDetailProps {
   };
 }
 
-const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
+export const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
   return (
     <div>
       <h2>{movie.title}</h2>
