@@ -9,6 +9,7 @@ const App = () => {
     <div className="App">
       <header className="App-header">
        <MovieList/>
+       <button className="btn btn-primary">Button Example</button>
       </header>
     </div>
   );
