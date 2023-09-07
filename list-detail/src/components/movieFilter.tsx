@@ -7,14 +7,17 @@ interface MovieFilterProps {
 
 export const MovieFilter: React.FC<MovieFilterProps> = ({ filterText, setFilterText }) => {
   return (
-    <div>
+    <div className="container">
+      <div className="row">
+      <label className="form-label">Filter: </label>
       <input
         type="text"
+        className="form-control"
         placeholder="Filter movie titles"
         value={filterText}
         onChange={(e) => setFilterText(e.currentTarget.value)}
       />
-      <br />
+      </div>
     </div>
   );
 };

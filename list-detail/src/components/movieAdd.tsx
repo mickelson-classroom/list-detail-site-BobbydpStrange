@@ -17,20 +17,28 @@ export const MovieAdd: React.FC<MovieAddProps> = ({ onAddMovie }) => {
   };
 
   return (
-    <div>
+    <div className="container">
+      <div className="row">
+      <label className="form-label">Title: </label>
       <input
         type="text"
+        className="form-control"
         placeholder="Add movie title"
         onChange={(e) => setInputTitle(e.currentTarget.value)}
         value={inputTitle}
       />
+      </div>
+      <div className="row">
+      <label className="form-label">Description: </label>
       <input
         type="text"
+        className="form-control"
         placeholder="Add movie description"
         onChange={(e) => setInputDesc(e.currentTarget.value)}
         value={inputDesc}
-      />
-      <button onClick={handleClick}>Add</button>
+      /></div>
+      <br></br>
+      <button className="btn btn-primary" onClick={handleClick}>Add</button>
     </div>
   );
 };

@@ -10,9 +10,17 @@ interface MovieDetailProps {
 
 export const MovieDetail: React.FC<MovieDetailProps> = ({ movie }) => {
   return (
-    <div>
-      <h2>{movie.title}</h2>
-      <p>{movie.description}</p>
+    <div className="container text-center">
+      <div className="row">
+        <div className="col-md-6">
+          <h2>Title</h2>
+          <p>{movie.title}</p>
+        </div>
+        <div className="col-md-6">
+          <h2>Description</h2>
+          <p>{movie.description}</p>
+        </div>
+      </div>
     </div>
   );
 };
