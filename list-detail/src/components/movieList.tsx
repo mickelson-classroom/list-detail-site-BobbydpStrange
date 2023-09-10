@@ -80,6 +80,12 @@ export const MovieList: React.FC = () => {
                   closeModal();
                 }}/>
               <br></br>
+              <button 
+                className="btn btn-secondary m-2" 
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#collapseList"
+                aria-expanded="true">Show List</button>
             </div>
             <hr/>
           </div>
@@ -87,7 +93,7 @@ export const MovieList: React.FC = () => {
       </div>
       <div className="container text-center">
         <div className="row">
-          <div className="col col-4 col-lg-4 col-sm">
+          <div className="col col-4 col-lg-4 col-sm collapse collapse show" id="collapseList">
             <ul className="list-group">
               {movies
                 .filter((movie) =>
