@@ -2,12 +2,9 @@ import React, { useState } from "react";
 import MovieDetail from "./movieDetail";
 import MovieFilter from "./movieFilter";
 import MovieAdd from "./movieAdd";
+import {Item} from "./movieItem";
+import {Movie} from "../models/movie"
 
-interface Movie {
-  id: number;
-  title: string;
-  description: string;
-}
 
 export const MovieList: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
@@ -15,7 +12,7 @@ export const MovieList: React.FC = () => {
   const [filterText, setFilterText] = useState("");
 
   const handleAddMovie = (title: string, description: string) => {
-    const newMovie: Movie = { id: Date.now(), title, description };
+    const newMovie: Movie = { id: Date.now(), title, description, genre: [] };
     setMovies([...movies, newMovie]);
   };
 
@@ -28,15 +25,32 @@ export const MovieList: React.FC = () => {
     }
   };
 
+  const handleAddGenre = (movieId: number, genre:string) => {
+    console.log("Add Genre"+ movieId+ "genre: " + genre)
+
+    setMovies((prevMovies) => 
+       prevMovies.map((movie) =>
+        movie.id === movieId ? { ...movie, genre: [...movie.genre, genre]} : movie
+      )
+    );
+        console.log("movie should be added")
+  };
+
+  const handleDeleteGenre = (movieId: number, deletingGenre : string) => {
+    setMovies((prevMovies) =>
+      prevMovies.map((movie) =>
+        movie.id === movieId
+          ? {...movie, genre: movie.genre.filter((g) => g !== deletingGenre)}
+          :movie
+      )
+    );
+  };
+
   return (
     <div>
       <div className="container text-center">
         <div className="col">
-          <div className="row-md-6">
-            {selectedMovie && movies.some((movie) => movie.id === selectedMovie.id) &&(
-              <MovieDetail movie={selectedMovie} />
-            )}
-          </div>
+          
           <div className="row">
             <div className="col-md-6">
               <MovieFilter filterText={filterText} setFilterText={setFilterText} />
@@ -45,32 +59,38 @@ export const MovieList: React.FC = () => {
               <MovieAdd onAddMovie={handleAddMovie} />
               <br></br>
             </div>
+            <hr/>
           </div>
         </div>
       </div>
       <div className="container text-center">
-        <div className="col-5">
-          <ul>
-            {movies
-              .filter((movie) =>
-                movie.title.toLowerCase().includes(filterText.toLowerCase())
-              )
-              .map((movie) => (
-                <li
-                  onClick={() => setSelectedMovie(movie)}
-                  key={movie.id}
-                >
-                  <div className="row">
-                    <div className="col">
-                      {movie.title}
-                    </div>
-                    <div className="col">
-                      <button className="btn btn-danger"  onClick={() => handleDelete(movie)}>Delete</button>
-                    </div>
-                  </div>
-                </li>
-              ))}
-          </ul>
+        <div className="row">
+          <div className="col col-4 col-lg-4 col-sm">
+            <ul className="list-group">
+              {movies
+                .filter((movie) =>
+                  movie.title.toLowerCase().includes(filterText.toLowerCase())
+                )
+                .map((movie) => (
+                  <Item onClick={(m) => setSelectedMovie(m)} 
+                    onDelete={handleDelete}
+                    key={movie.id} 
+                    item={movie} 
+                    isSelected={movie.id === selectedMovie?.id}/>
+                ))}
+            </ul>
+          </div>
+          <div className="col col-8 col-md ">
+            <div className="row-md-6">
+                {selectedMovie && movies.some((movie) => movie.id === selectedMovie.id) &&(
+                  <MovieDetail 
+                    movie={selectedMovie}
+                    onAddGenre={(movieId,genre) => selectedMovie?.id && handleAddGenre(selectedMovie.id, genre)}
+                    onDeleteGenre={(movieId, index) => selectedMovie?.genre && handleDeleteGenre(selectedMovie.id, selectedMovie.genre[index])} 
+                  />
+                )}
+            </div>
+          </div>
         </div>
       </div>
     </div>
