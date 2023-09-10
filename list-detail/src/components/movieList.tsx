@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import MovieDetail from "./movieDetail";
 import MovieFilter from "./movieFilter";
-import MovieAdd from "./movieAdd";
+import MovieAddModal from "./movieAddModal";
 import {Item} from "./movieItem";
 import {Movie} from "../models/movie"
 
@@ -10,11 +10,16 @@ export const MovieList: React.FC = () => {
   const [movies, setMovies] = useState<Movie[]>([]);
   const [selectedMovie, setSelectedMovie] = useState<Movie | undefined>();
   const [filterText, setFilterText] = useState("");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleAddMovie = (title: string, description: string) => {
-    const newMovie: Movie = { id: Date.now(), title, description, genre: [] };
-    setMovies([...movies, newMovie]);
+  const openModal = () => {
+    console.log("Opening modal");
+    setIsModalOpen(true);
   };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  }
 
   const handleDelete = (deletingMovie: Movie) => {
     const newMovies = movies.filter((movie) => movie.id !== deletingMovie.id);
@@ -56,7 +61,24 @@ export const MovieList: React.FC = () => {
               <MovieFilter filterText={filterText} setFilterText={setFilterText} />
             </div>
             <div className="col-md-6">
-              <MovieAdd onAddMovie={handleAddMovie} />
+              <button 
+                className="btn btn-primary"
+                onClick={openModal}
+                data-bs-toggle="modal"
+                data-bs-target="#movieAddModal">+ Add Movie</button>
+              <MovieAddModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                onAddMovie={(title, description) =>{
+                  const newMovie = {
+                    id: Date.now(),
+                    title: title,
+                    description: description,
+                    genre: []
+                  };
+                  setMovies([...movies, newMovie]);
+                  closeModal();
+                }}/>
               <br></br>
             </div>
             <hr/>

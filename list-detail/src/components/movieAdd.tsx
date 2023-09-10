@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface MovieAddProps {
   onAddMovie: (title: string, description: string) => void;
+  onTitleChange: (title: string) => void;
+  onDescriptionChange: (description: string) => void;
 }
 
-export const MovieAdd: React.FC<MovieAddProps> = ({ onAddMovie }) => {
+export const MovieAdd: React.FC<MovieAddProps> = ({ onAddMovie, onTitleChange, onDescriptionChange }) => {
   const [inputTitle, setInputTitle] = useState<string>("");
   const [inputDesc, setInputDesc] = useState<string>("");
 
@@ -13,7 +15,8 @@ export const MovieAdd: React.FC<MovieAddProps> = ({ onAddMovie }) => {
       return;
     }
     onAddMovie(inputTitle, inputDesc);
-    
+    setInputTitle("");
+    setInputDesc("");
   };
 
   return (
@@ -24,7 +27,8 @@ export const MovieAdd: React.FC<MovieAddProps> = ({ onAddMovie }) => {
         type="text"
         className="form-control"
         placeholder="Add movie title"
-        onChange={(e) => setInputTitle(e.currentTarget.value)}
+        onChange={(e) => {setInputTitle(e.currentTarget.value);
+          onTitleChange(e.currentTarget.value);}}
         value={inputTitle}
       />
       </div>
@@ -34,7 +38,8 @@ export const MovieAdd: React.FC<MovieAddProps> = ({ onAddMovie }) => {
         type="text"
         className="form-control"
         placeholder="Add movie description"
-        onChange={(e) => setInputDesc(e.currentTarget.value)}
+        onChange={(e) => {setInputDesc(e.currentTarget.value);
+          onDescriptionChange(e.currentTarget.value);}}
         value={inputDesc}
       /></div>
       <br></br>
