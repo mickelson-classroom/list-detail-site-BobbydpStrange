@@ -69,14 +69,8 @@ export const MovieList: React.FC = () => {
               <MovieAddModal
                 isOpen={isModalOpen}
                 onClose={closeModal}
-                onAddMovie={(title, description) =>{
-                  const newMovie = {
-                    id: Date.now(),
-                    title: title,
-                    description: description,
-                    genre: []
-                  };
-                  setMovies([...movies, newMovie]);
+                onAddMovie={(movie) =>{
+                  setMovies([...movies, movie]);
                   closeModal();
                 }}/>
               <br></br>

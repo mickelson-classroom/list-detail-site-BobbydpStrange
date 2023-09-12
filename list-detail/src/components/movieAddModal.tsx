@@ -5,21 +5,24 @@ import MovieAdd from "./movieAdd";
 interface MovieAddModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onAddMovie: (title: string, description: string) => void;
+  onAddMovie: (movie: Movie) => void;
 }
 
 export const MovieAddModal: React.FC<MovieAddModalProps> = ({ isOpen, onClose, onAddMovie }) => {
 
-  const [newMovie, setNewMovie] = useState<Movie>({id: Date.now(), title: "", description: "", genre: []});
+  const [newMovie, setNewMovie] = useState<Movie>({id: Date.now(), title: "", description: "",year: "", runTime: "", rating: "", genre: []});
 
   const handleAddMovie = () => {
-    const {title, description} = newMovie;
-    onAddMovie(title, description);
-    onClose();
-    setNewMovie({id: Date.now(), title: "", description:"", genre: []});
-    
+    const { title, description, year, runTime, rating } = newMovie;
+    if (title && description && year && runTime && rating) {
+      onAddMovie(newMovie); 
+      onClose();
+      setNewMovie({
+        id: Date.now(), title: "", description: "", year: "", runTime: "", rating: "", genre: [],
+      });
+    }
   };
- 
+  
   return (
     <div className="modal fade" id="movieAddModal"  >
         <div className="modal-dialog">
@@ -30,10 +33,12 @@ export const MovieAddModal: React.FC<MovieAddModalProps> = ({ isOpen, onClose, o
             </div>
             <div className="modal-body">
                 <MovieAdd 
-                  onTitleChange={(title) => setNewMovie({...newMovie, title})}
-                  onDescriptionChange={(description) =>
-                    setNewMovie({...newMovie, description})}
                   onAddMovie={handleAddMovie} 
+                  onTitleChange={(title) => setNewMovie({...newMovie, title})}
+                  onDescriptionChange={(description) => setNewMovie({...newMovie, description})}
+                  onYearChange={(year) => setNewMovie({ ...newMovie, year })}
+                  onRunTimeChange={(runTime) => setNewMovie({ ...newMovie, runTime })}
+                  onRatingChange={(rating) => setNewMovie({ ...newMovie, rating })}
                 />
             </div>
             <div className="modal-footer">
