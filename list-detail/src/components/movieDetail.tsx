@@ -5,6 +5,9 @@ interface MovieDetailProps {
     id: number;
     title: string;
     description: string;
+    year: string;
+    runTime: string;
+    rating: string;
     genre: string[];
   };
   onAddGenre: (movieId: number, genre: string) => void;
@@ -36,6 +39,21 @@ export const MovieDetail: React.FC<MovieDetailProps> = ({ movie, onAddGenre, onD
         <div className="col col-md-6">
           <h2>Description</h2>
           <p>{movie.description}</p>
+        </div>
+      </div>
+      <hr/>
+      <div className="row  ">
+        <div className="col col-md-4">
+          <h4>Year</h4>
+          <p>{movie.year}</p>
+        </div>
+        <div className="col col-md-4">
+          <h4>RunTime</h4>
+          <p>{movie.runTime}</p>
+        </div>
+        <div className="col col-md-4">
+          <h4>Rating</h4>
+          <p>{movie.rating}</p>
         </div>
       </div>
       <hr/>

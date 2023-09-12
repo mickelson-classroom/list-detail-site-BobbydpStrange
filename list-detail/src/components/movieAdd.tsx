@@ -30,7 +30,7 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
   const isDescValid = inputDesc.length >= minCharactrCount;
   const isRunTimeValid = inputRunTime.length > 0;
   const isRatingValid = inputRating !== "";
-  const isYearValid = inputYear !== "";
+  const isYearValid = inputYear !== "" && inputYear.length <= 4;
 
   const handleTitleChange = (value: string) => {
     setInputTitle(value);
