@@ -12,8 +12,16 @@ export const MovieList: React.FC = () => {
   const [filterText, setFilterText] = useState("");
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  const handleEditMovie = (editedMovie: Movie) => {
+    const updatedMovies = [...movies];
+    const index = updatedMovies.findIndex((movie) => movie.id === editedMovie.id);
+    if (index !== -1) {
+      updatedMovies[index] = editedMovie;
+    }
+    setMovies(updatedMovies);
+  };
+
   const openModal = () => {
-    console.log("Opening modal");
     setIsModalOpen(true);
   };
 
@@ -106,9 +114,12 @@ export const MovieList: React.FC = () => {
             <div className="row-md-6">
                 {selectedMovie && movies.some((movie) => movie.id === selectedMovie.id) &&(
                   <MovieDetail 
+                    key={selectedMovie.id}
                     movie={selectedMovie}
                     onAddGenre={(movieId,genre) => selectedMovie?.id && handleAddGenre(selectedMovie.id, genre)}
                     onDeleteGenre={(movieId, index) => selectedMovie?.genre && handleDeleteGenre(selectedMovie.id, selectedMovie.genre[index])} 
+                    onEditMovie={handleEditMovie}                      
+                    
                   />
                 )}
             </div>

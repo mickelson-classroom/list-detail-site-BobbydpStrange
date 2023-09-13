@@ -1,59 +1,87 @@
 import React,{ useState } from "react";
+import MovieEdit from "./movieEdit";
+import {Movie} from "../models/movie";
 
 interface MovieDetailProps {
-  movie: {
-    id: number;
-    title: string;
-    description: string;
-    year: string;
-    runTime: string;
-    rating: string;
-    genre: string[];
-  };
+  movie: Movie;
   onAddGenre: (movieId: number, genre: string) => void;
   onDeleteGenre: (movieId: number, index: number) => void;
+  onEditMovie: (editedMovie: Movie) => void;
 }
 
-export const MovieDetail: React.FC<MovieDetailProps> = ({ movie, onAddGenre, onDeleteGenre }) => {
+export const MovieDetail: React.FC<MovieDetailProps> = ({ movie, onAddGenre, onDeleteGenre, onEditMovie }) => {
   const [newGenre, setNewGenre] = useState<string>("");
+  const [isEditFormOpen, setIsEditFormOpen] = useState(false);
+  const [editedMovie, setEditedMovie] = useState<Movie>(movie);
+
+  const toggleEditForm =() => {
+    setIsEditFormOpen(!isEditFormOpen);
+  }
+
+  const handleEditMovie = (editedMovie: Movie) => {
+    setEditedMovie(editedMovie);
+    onEditMovie(editedMovie);
+  };
 
   const handleAddGenre = () => {
-    console.log("Add Genre: "+ newGenre)
     if (newGenre.trim() !== ""){
+      const updatedMovie = {...editedMovie};
+      updatedMovie.genre.push(newGenre);
+      setEditedMovie(updatedMovie);
       onAddGenre(movie.id, newGenre);
       setNewGenre("");
     }
   };
 
   const handleDeleteGenre = (index: number) => {
+    const updatedMovie = {...editedMovie};
+    updatedMovie.genre.splice(index, 1);
+    setEditedMovie(updatedMovie);
     onDeleteGenre(movie.id, index);
   };
 
   return (
     <div className="container text-center border rounded-5 p-3 bg-secondary-subtle border-secondary">
+      <div className="row">
+        <div className="col col-md-2">
+          <button 
+            type="button" 
+            className="btn active m-2" 
+            data-bs-toggle="button collapse"
+            data-bs-target="#collapseEdit"
+            aria-expanded={isEditFormOpen ? "true" : "false"}
+            onClick={toggleEditForm}>Edit</button>
+        </div>
+      </div>
+      {isEditFormOpen && (
+      <div className={`collapse ${isEditFormOpen ? "show": ""}`} id="collapseEdit">
+        <MovieEdit
+          movie={movie}
+          onEditMovie= {handleEditMovie}/>
+      </div>)}
       <div className="row  ">
         <div className="col col-md-6">
           <h2>Title</h2>
-          <p>{movie.title}</p>
+          <p>{editedMovie.title}</p>
         </div>
         <div className="col col-md-6">
           <h2>Description</h2>
-          <p>{movie.description}</p>
+          <p>{editedMovie.description}</p>
         </div>
       </div>
       <hr/>
       <div className="row  ">
         <div className="col col-md-4">
           <h4>Year</h4>
-          <p>{movie.year}</p>
+          <p>{editedMovie.year}</p>
         </div>
         <div className="col col-md-4">
           <h4>RunTime</h4>
-          <p>{movie.runTime}</p>
+          <p>{editedMovie.runTime}</p>
         </div>
         <div className="col col-md-4">
           <h4>Rating</h4>
-          <p>{movie.rating}</p>
+          <p>{editedMovie.rating}</p>
         </div>
       </div>
       <hr/>
