@@ -61,14 +61,14 @@ export const MovieList: React.FC = () => {
 
   return (
     <div>
-      <div className="container text-center">
-        <div className="col">
+      <div className="container text-center ">
+        <div className="col col-lg-10 col-md-10 col-sm-10 col-12 mx-auto">
           
           <div className="row">
-            <div className="col-md-6">
+            <div className="col col-md-6 col-sm-12 col-12" >
               <MovieFilter filterText={filterText} setFilterText={setFilterText} />
             </div>
-            <div className="col-md-6">
+            <div className="col col-md-6 col-sm-12 col-12">
               <button 
                 className="btn btn-primary"
                 onClick={openModal}
@@ -93,9 +93,9 @@ export const MovieList: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="container text-center">
+      <div className="container text-center col col-lg-10 col-md-10 col-sm-10 col-12 mx-auto">
         <div className="row">
-          <div className="col col-4 col-lg-4 col-sm collapse collapse show" id="collapseList">
+          <div className="col col-4 col-lg-4 col-sm col-12 collapse collapse show" id="collapseList">
             <ul className="list-group">
               {movies
                 .filter((movie) =>
@@ -110,7 +110,7 @@ export const MovieList: React.FC = () => {
                 ))}
             </ul>
           </div>
-          <div className="col col-8 col-md ">
+          <div className="col col-8 col-md col-sm-12 col-12 ">
             <div className="row-md-6">
                 {selectedMovie && movies.some((movie) => movie.id === selectedMovie.id) &&(
                   <MovieDetail 

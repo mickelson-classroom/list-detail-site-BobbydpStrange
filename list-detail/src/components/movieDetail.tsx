@@ -61,11 +61,11 @@ export const MovieDetail: React.FC<MovieDetailProps> = ({ movie, onAddGenre, onD
           onEditMovie= {handleEditMovie}/>
       </div>)}
       <div className="row  ">
-        <div className="col col-md-6">
+        <div className="col col-lg-6 col-md-12 col-sm-12 col-12">
           <h2>Title</h2>
           <p>{editedMovie.title}</p>
         </div>
-        <div className="col col-md-6">
+        <div className="col col-lg-6 col-md-12 col-sm-12 col-12">
           <h2>Description</h2>
           <p>{editedMovie.description}</p>
         </div>
