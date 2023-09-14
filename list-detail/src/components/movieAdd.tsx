@@ -96,7 +96,7 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
         />
       </div>
       <div className="row">
-        <div className="col col-md-6">
+        <div className="col col-md-6 col-sm-6 col-12">
           <TextInput
             label= "Year:*"
             value={inputYear}
@@ -106,7 +106,7 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
             feedbackMessage="Must be no more than 4 characters."
           />
         </div>
-        <div className="col col-md-6">
+        <div className="col col-md-6 col-sm-6 col-12">
           <label className="form-label">Rating:*</label>
           <div className="input-group has-validation">
             <select 

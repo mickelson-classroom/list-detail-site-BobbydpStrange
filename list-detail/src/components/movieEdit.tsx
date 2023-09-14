@@ -40,7 +40,7 @@ export const MovieEdit: React.FC<MovieEditProps> = ({
 
   return (
     <form className="container needs-validation" >
-      <div className="row">
+      <div className="row ">
         <TextInput
           label= "Title:*"
           value={editedTitle}
@@ -61,7 +61,7 @@ export const MovieEdit: React.FC<MovieEditProps> = ({
         />
       </div>
       <div className="row">
-        <div className="col col-md-6">
+        <div className="col col-md-6 col-sm-6 col-12 ">
           <TextInput
             label= "Year:*"
             value={editedYear}
@@ -71,7 +71,7 @@ export const MovieEdit: React.FC<MovieEditProps> = ({
             feedbackMessage="Must be no more than 4 characters."
           />
         </div>
-        <div className="col col-md-6">
+        <div className="col col-md-6 col-sm-6 col-12">
           <label className="form-label">Rating:*</label>
           <div className="input-group has-validation">
             <select 
