@@ -1,5 +1,6 @@
 import React,{ useState } from "react";
 import MovieEdit from "./movieEdit";
+import TextInput from "./textInput";
 import {Movie} from "../models/movie";
 
 interface MovieDetailProps {
@@ -90,15 +91,15 @@ export const MovieDetail: React.FC<MovieDetailProps> = ({ movie, onAddGenre, onD
           <div className="col">
             <h3>Genre:</h3>
             <div className="row">
-              <label 
-                className="form-label">Genre Name:</label>
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Genre (reload page to see new items)"
+              <TextInput
+                label= "Genre Name:*"
                 value={newGenre}
-                onChange={(e) => setNewGenre(e.target.value)}
+                onChange={setNewGenre}
+                placeholderText="Add new Genre"
+                validationRules={(value) => value.length >= 2}
+                feedbackMessage="Must be at least 2 characters."
               />
+              
               <button className="btn btn-secondary"
                 onClick={handleAddGenre}>+
               </button>
