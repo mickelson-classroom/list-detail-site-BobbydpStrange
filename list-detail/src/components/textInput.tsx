@@ -48,7 +48,7 @@ const TextInput: React.FC<TextInputProps> = ({
             value={inputValue}
             aria-invalid={!isValid}
           />
-          {!isValid && <div className="feedback-message">{feedbackMessage}</div>}
+          {!isValid && <div className="invalid-feedback feedback-message">{feedbackMessage}</div>}
         </div>
       </>
     );
