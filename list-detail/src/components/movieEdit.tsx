@@ -15,7 +15,7 @@ export const MovieEdit: React.FC<MovieEditProps> = ({
   const [editedRating, setEditedRating] = useState(movie.rating);
   const [editedYear, setEditedYear] = useState(movie.year);
 
-  const minCharactrCount = 3;
+  const minCharactrCount = 2;
 
   const isTitleValid = editedTitle.length >= minCharactrCount;
   const isDescValid = editedDesc.length >= minCharactrCount;

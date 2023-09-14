@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {Movie} from "../models/movie";
+import TextInput from "./textInput";
 
 interface MovieAddProps {
   onAddMovie: (movie: Movie) => void;
@@ -75,23 +76,14 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
   return (
     <form className="container needs-validation" >
       <div className="row">
-        <label className="form-label" htmlFor="title">Title:* </label>
-        <div className="input-group has-validation">
-          <input
-            className={`form-control ${isTitleValid ? "is-valid": "is-invalid"}`}
-            type="text"
-            name="title"
-            id="title"
-            placeholder="Add movie title"
-            onChange={(e) => {setInputTitle(e.currentTarget.value);
-              onTitleChange(e.currentTarget.value);}}
-            value={inputTitle}
-            aria-describedby="titlevalidation"
-            required
-          />
-          <div id="titlevalidation" className="valid-feedback">Great Movie</div>
-          <div id="titlevalidation" className="invalid-feedback">Needs to be greater than 3 characters</div>
-        </div>
+        <TextInput
+          label= "Title"
+          value={inputTitle}
+          onChange={handleTitleChange}
+          placeholderText="Add title of movie"
+          validationRules={(value) => value.length >= 2}
+          feedbackMessage="Must be at least 2 characters."
+        />
       </div>
       <div className="row">
         <label className="form-label" htmlFor="runtime">Runtime:*</label>
