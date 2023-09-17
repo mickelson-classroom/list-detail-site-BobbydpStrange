@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import {Movie} from "../models/movie";
 import TextInput from "./textInput";
+import SelectInput from "./selectInput";
+import RadioInput from "./radioInput";
 
 interface MovieAddProps {
   onAddMovie: (movie: Movie) => void;
@@ -9,6 +11,7 @@ interface MovieAddProps {
   onYearChange: (year: string) => void;
   onRunTimeChange: (runTime: string) => void;
   onRatingChange: (rating: string) => void;
+  onWatchedChange: (watched: boolean) => void;
 }
 
 export const MovieAdd: React.FC<MovieAddProps> = ({ 
@@ -17,15 +20,18 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
   onDescriptionChange,
   onYearChange,
   onRunTimeChange,
-  onRatingChange
+  onRatingChange,
+  onWatchedChange
 }) => {
   const [inputTitle, setInputTitle] = useState<string>("");
   const [inputDesc, setInputDesc] = useState<string>("");
   const [inputRunTime, setInputRunTime] = useState<string>("");
   const [inputRating, setInputRating] = useState<string>("");
   const [inputYear, setInputYear] = useState<string>("");
+  const [inputWatched, setInputWatched] = useState<boolean>(false);
 
   const minCharactrCount = 3;
+  const movieRatings = ["1","2","3","4","5"];
 
   const isTitleValid = inputTitle.length >= minCharactrCount;
   const isDescValid = inputDesc.length >= minCharactrCount;
@@ -33,6 +39,10 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
   const isRatingValid = inputRating !== "";
   const isYearValid = inputYear !== "" && inputYear.length <= 4;
 
+  const handleSubmit =(event: React.FormEvent) => {
+    event.preventDefault();
+    handleClick();
+  }
   const handleTitleChange = (value: string) => {
     setInputTitle(value);
     onTitleChange(value);
@@ -50,9 +60,14 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
     onYearChange(value);
   };
   const handleRatingChange = (value: string) => {
+    console.log("handle rating" + value)
     setInputRating(value);
     onRatingChange(value);
   };
+  const handleWatchedChange = (value: boolean) => {
+    setInputWatched(value);
+    onWatchedChange(value);
+  }
 
   const handleClick = () => {
     if (isTitleValid && isDescValid && isRatingValid && isRunTimeValid && isYearValid) {
@@ -63,18 +78,21 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
         year: inputYear,
         runTime: inputRunTime,
         rating: inputRating,
-        genre: [], 
+        genre: [],
+        watched: inputWatched, 
       });
+    setInputRating("");
+    console.log('set value:', inputRating);
     setInputTitle("");
     setInputDesc("");
     setInputYear("");
     setInputRunTime("");
-    setInputRating("");
+    setInputWatched(false);
     }
   };
 
   return (
-    <form className="container needs-validation" >
+    <form className="container needs-validation" onSubmit={handleSubmit} >
       <div className="row">
         <TextInput
           label= "Title:*"
@@ -107,36 +125,30 @@ export const MovieAdd: React.FC<MovieAddProps> = ({
           />
         </div>
         <div className="col col-md-6 col-sm-6 col-12">
-          <label className="form-label">Rating:*</label>
-          <div className="input-group has-validation">
-            <select 
-              className={`form-control ${isRatingValid ? "is-valid": "is-invalid"}`}
-              id="rating"
-              required
-              aria-describedby="ratingvalidation"
-              onChange={(e) => handleRatingChange(e.currentTarget.value)}
-              value={inputRating}
-              >
-              <option selected disabled value="">Choose...</option>
-              <option>1</option>
-              <option>2</option>
-              <option>3</option>
-              <option>4</option>
-              <option>5</option>
-            </select>
-            <div id="ratingvalidation" className="invalid-feedback">Need a rating</div>
-          </div>
+          <SelectInput
+            label="Rating:*"
+            value={inputRating}
+            options={movieRatings}
+            onChange={handleRatingChange}
+          />
         </div>
       </div>
       <div className="row">
         <TextInput
-            label= "Description:"
+            label= "Description:*"
             value={inputDesc}
             onChange={handleDescChange}
             placeholderText="Add movie description"
             validationRules={(value) => value.length >= 2}
             feedbackMessage="Must be at least 2 characters."
           />
+      </div>
+      <div className="row">
+        <RadioInput
+          label= "Watched?"
+          value={inputWatched}
+          onChange={handleWatchedChange}
+        />
       </div>
       <br></br>
       <button className="btn btn-primary" type="submit" onClick={handleClick}>Add</button>

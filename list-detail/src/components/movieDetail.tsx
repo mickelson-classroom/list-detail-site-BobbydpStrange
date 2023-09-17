@@ -85,6 +85,10 @@ export const MovieDetail: React.FC<MovieDetailProps> = ({ movie, onAddGenre, onD
           <p>{editedMovie.rating}</p>
         </div>
       </div>
+      <div className="row">
+        <h4>Watched:</h4>
+        <p>{editedMovie.watched ?  'No': 'Yes' }</p>
+      </div>
       <hr/>
       <div className="row mt-3">
         <div className="col-12">

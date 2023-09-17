@@ -6,4 +6,5 @@ export interface Movie {
     runTime: string;
     rating: string;
     genre: string[];
+    watched: boolean;
 }

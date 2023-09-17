@@ -10,7 +10,7 @@ interface MovieAddModalProps {
 
 export const MovieAddModal: React.FC<MovieAddModalProps> = ({ isOpen, onClose, onAddMovie }) => {
 
-  const [newMovie, setNewMovie] = useState<Movie>({id: Date.now(), title: "", description: "",year: "", runTime: "", rating: "", genre: []});
+  const [newMovie, setNewMovie] = useState<Movie>({id: Date.now(), title: "", description: "",year: "", runTime: "", rating: "", genre: [], watched: false});
 
   const handleAddMovie = () => {
     const { title, description, year, runTime, rating } = newMovie;
@@ -18,7 +18,7 @@ export const MovieAddModal: React.FC<MovieAddModalProps> = ({ isOpen, onClose, o
       onAddMovie(newMovie); 
       onClose();
       setNewMovie({
-        id: Date.now(), title: "", description: "", year: "", runTime: "", rating: "", genre: [],
+        id: Date.now(), title: "", description: "", year: "", runTime: "", rating: "", genre: [], watched: false,
       });
     }
   };
@@ -39,6 +39,7 @@ export const MovieAddModal: React.FC<MovieAddModalProps> = ({ isOpen, onClose, o
                   onYearChange={(year) => setNewMovie({ ...newMovie, year })}
                   onRunTimeChange={(runTime) => setNewMovie({ ...newMovie, runTime })}
                   onRatingChange={(rating) => setNewMovie({ ...newMovie, rating })}
+                  onWatchedChange={(watched) => setNewMovie({...newMovie, watched})}
                 />
             </div>
             <div className="modal-footer">
